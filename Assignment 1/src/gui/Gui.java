@@ -1,6 +1,6 @@
 package gui;
 
-import game.GameBoard;
+import game.Game;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,24 +11,22 @@ import java.awt.*;
 public class Gui extends JFrame {
 
     private JPanel cards;
-    private GameBoard board;
+    private GameView gameView;
 
-    public Gui(GameBoard board){
-        this.board = board;
+    public Gui(Game game){
 
-
-        JPanel setup = createPanel(new SetupGameView(this));
-        JPanel game = createPanel(new GameBoardView(board));
+        JPanel setup = createPanel(new SetupGameView(this, game));
+        gameView = new GameView(game);
 
         cards = new JPanel(new CardLayout());
         cards.add(setup);
-        cards.add(game);
+        cards.add(gameView);
 
         setVisible(true);
         add(cards);
 
         setTitle("Othello");
-        setSize(850, 850);
+        setSize(950, 1000);
         setLocationRelativeTo(null);
     }
 
@@ -41,8 +39,9 @@ public class Gui extends JFrame {
         return panel;
     }
 
-    public void startGame(){
+    public void switchToGameView(){
         CardLayout layout = (CardLayout)(cards.getLayout());
         layout.last(cards);
+        gameView.drawBoard();
     }
 }

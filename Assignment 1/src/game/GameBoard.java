@@ -1,13 +1,16 @@
 package game;
 
+import java.util.Arrays;
+
 /**
  * Created by Johanna on 2016-02-03.
  */
 public class GameBoard {
     private Disk[][] board;
-    int gameSize = 8;
+    private int gameSize = 8;
 
     public GameBoard(){
+
         board = new Disk[gameSize][gameSize];
     }
 
@@ -22,19 +25,19 @@ public class GameBoard {
         return gameSize;
     }
 
-    public boolean isEmpty(int x, int y){
-        return board[x][y] == null;
-    }
-
-    public Disk.Color getColor(int x, int y) {
-        return board[x][y].getColor();
-    }
-
-    public void placeDisk(int x, int y, Disk.Color color){
+    protected void placeDisk(int x, int y, Disk.Color color){
         board[x][y] = new Disk(color);
+    }
+
+    protected void flipDisk(int x, int y){
+        board[x][y].flip();
     }
 
     public boolean isColor(int x, int y, Disk.Color color) {
         return board[x][y] != null && board[x][y].getColor() == color;
+    }
+
+    public boolean isEmpty(int x, int y) {
+        return board[x][y] == null;
     }
 }

@@ -1,5 +1,6 @@
 package program;
 
+import game.Game;
 import game.GameBoard;
 import gui.Gui;
 
@@ -10,9 +11,8 @@ import javax.swing.*;
  */
 public class Program {
     public static void main(String[] args) {
-        GameBoard board = new GameBoard();
-        board.setupNewGame();
-        Gui gui = new Gui(board);
+        Game game = new Game();
+        Gui gui = new Gui(game);
         gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         while (true){
 

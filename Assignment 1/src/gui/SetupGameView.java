@@ -1,5 +1,8 @@
 package gui;
 
+import game.Disk;
+import game.Game;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,9 +14,11 @@ import java.awt.event.ActionListener;
 public class SetupGameView extends JPanel implements ActionListener {
 
     private Gui gui;
+    private Game game;
 
-    public SetupGameView(Gui gui){
+    public SetupGameView(Gui gui, Game game){
         this.gui = gui;
+        this.game = game;
         Label greeting = new Label("Välkommen till Johannas Othello spel");
         this.add(greeting);
 
@@ -44,6 +49,7 @@ public class SetupGameView extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        gui.startGame();
+        game.startGame(Disk.Color.Black, 1); //TODO: Take user selected values
+        gui.switchToGameView();
     }
 }

@@ -1,6 +1,7 @@
 package gui;
 
 import game.Disk;
+import game.Game;
 import game.GameBoard;
 
 import javax.imageio.ImageIO;
@@ -13,15 +14,33 @@ import java.io.IOException;
 /**
  * Created by Johanna on 2016-02-03.
  */
-public class GameBoardView extends JPanel implements ActionListener {
+public class GameView extends JPanel implements ActionListener {
 
+    JPanel gameGrid;
     JButton[][] pieceButtons;
-
+    Label statusLabel;
     private Image white, black;
     GameBoard board;
+    private Game game;
 
-    public GameBoardView(GameBoard board){
-        this.board = board;
+
+    public GameView(Game game){
+        this.game = game;
+        this.board = game.getBoard();
+
+        this.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+
+
+        gameGrid = new JPanel();
+        gameGrid.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        gameGrid.setLayout(new GridLayout(8, 8, 5, 5));
+        gameGrid.setVisible(true);
+        this.add(gameGrid);
+
+        statusLabel = new Label("Det är din tur, välj var du ska lägga din bricka");
+        statusLabel.setAlignment(Label.CENTER);
+        this.add(statusLabel);
 
         try {
             white = ImageIO.read(getClass().getResource("../resources/white.jpg"));
@@ -41,7 +60,7 @@ public class GameBoardView extends JPanel implements ActionListener {
                 JButton btn = new JButton();
                 btn.setBackground(Color.BLACK);
                 pieceButtons[i][j] = btn;
-                this.add(btn);
+                gameGrid.add(btn);
                 pieceButtons[i][j].addActionListener(this);
             }
 
@@ -60,10 +79,16 @@ public class GameBoardView extends JPanel implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
+        if(!game.isPlayersTurn())
+            return;
         for (int i = 0; i < pieceButtons.length; i++) {
             for (int j = 0; j < pieceButtons[i].length; j++) {
                 if (pieceButtons[i][j] == e.getSource()) {
-                    board.placeDisk(i, j, Disk.Color.Black);
+                    boolean wasLegalMove = game.tryPlaceDisk(i, j, Disk.Color.Black);
+                    if(!wasLegalMove)
+                        statusLabel.setText("Det är inte ett gilltigt drag, välj ett gilltigt drag");
+                    else
+                        statusLabel.setText("Det är datorns tur nu, den tänker");
                 }
             }
         }

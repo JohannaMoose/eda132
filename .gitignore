@@ -14,3 +14,5 @@ hs_err_pid*
 !Othello.jar
 !Robot.jar
 !*/lib/*.jar
+!*/dist/*.jar
+

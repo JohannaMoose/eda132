@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact build-on-make="true" name="jar">
+    <output-path>$PROJECT_DIR$</output-path>
+    <root id="root">
+      <element id="archive" name="Assignment 3 - Machine Learning.jar">
+        <element id="module-output" name="Assignment 3 - Machine Learning" />
+      </element>
+      <element id="library" level="project" name="SSJ" />
+    </root>
+  </artifact>
+</component>
